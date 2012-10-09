@@ -26,13 +26,13 @@ class Crawl:
 
     def sitecrawl(self):
         site = urllib2.urlopen(self.url)
-        print( "opened: " + self.url)
+        print( "Loading " + self.url)
         self.site =  site.read()
         self.getLinks()
 
 class Down:
     links=[]
-    localpath ="iphone/"
+    localpath =""
     ptype = ""
     def __init__(self,links, localpath, ptype):
         self.links = links
@@ -46,17 +46,36 @@ class Down:
         dll = dom.find("a",class_=self.ptype)
         return dll.get("href")
 
-    def load(self, url):
-        """downloads the iPhone Wallpaper from mantia.me/wallpaper/XXX"""
+    def load(self, url, i):
+        #downloads the iPhone Wallpaper from mantia.me/wallpaper/XXX
+        # webFile = urllib2.urlopen(url)
+        # if not os.path.exists(self.localpath):
+        #     os.makedirs(self.localpath)
+        # localFile = open(self.localpath + "/"+ url.split('/')[-1], 'w')
+        # localFile.write(webFile.read())
+        # webFile.close()
+        # localFile.close()
+
         webFile = urllib2.urlopen(url)
-        if not os.path.exists(self.localpath):
-            os.makedirs(self.localpath)
-        localFile = open(self.localpath + "/"+ url.split('/')[-1], 'w')
-        localFile.write(webFile.read())
-        webFile.close()
+        localFile = open(self.localpath + "/" + url.split('/')[-1], 'w')
+        meta = webFile.info()
+        file_size = int(meta.getheaders("Content-Length")[0])
+        print("[" + str(i) + "/" + str(len(c.links)) + "] Downloading: {0} Size: {1} Bytes".format(url, file_size))
+
+        file_size_dl = 0
+        block_sz = 4096
+        while True:
+            buffer = webFile.read(block_sz)
+            if not buffer:
+                break
+
+            file_size_dl += len(buffer)
+            localFile.write(buffer)
+
         localFile.close()
+
 def usage():
-    print "usage:"
+    print "Usage:"
     print ""
     print "python mantiacrawl.py <localpath> <type>"
     print ""
@@ -72,19 +91,16 @@ if len(sys.argv)==3: #check for right number of arguments
     if sys.argv[1] is not None and sys.argv[2] is not None:
         localpath = sys.argv[1]
         ptype = sys.argv[2]
-        print localpath
-        print ptype
-        if ptype =="iphone" or ptype=="wallpaper" or ptype == "fullscreen":
-            c = Crawl(site_url)
-            print ""
-            print ""
-            print "Liste fertig"
-            print ""
+        print "Downloading everything on " + site_url + ptype + " to " + localpath
+        c = Crawl(site_url)
+        print "Fetched all links."
 
-            d=Down(c.links,localpath,ptype)
-            print "DOWN initialisiert"
-            for link in c.links:
-                print "wird aufgerufen: " + link
-                d.load(d.getDownloadLink(link))
+        d = Down(c.links,localpath,ptype)
+        print "Starting download."
+        i = 1
+        for link in c.links:
+            d.load(d.getDownloadLink(link), i)
+            i += 1
+            
 else:
     usage()
