@@ -48,23 +48,15 @@ class Down:
 
     def load(self, url, i):
         webFile = urllib2.urlopen(url)
-        localFile = open(self.localpath + "/" + url.split('/')[-1], 'wb')
+        localFile = open(self.localpath + "/" + url.split('/')[-1], 'w')
         meta = webFile.info()
-        webFile_size = int(meta.getheaders("Content-Length")[0])
+        file_size = int(meta.getheaders("Content-Length")[0])
+        print("[" + str(i) + "/" + str(len(c.links)) + "] Downloading: {0} Size: {1} Bytes".format(url, file_size))
 
-        if os.path.exists(localFile)
-            localFile_size = os.path.getsize(localFile)
-            print webFile_size
-            print localFile_size
-            if webFile_size == localFile_size:
-                break
-
-        print("[" + str(i) + "/" + str(len(c.links)) + "] Downloading: {0} Size: {1} Bytes".format(url, webFile_size))
-        #Start actual download
         file_size_dl = 0
-        block_size = 4096
+        block_sz = 4096
         while True:
-            buffer = webFile.read(block_size)
+            buffer = webFile.read(block_sz)
             if not buffer:
                 break
 
