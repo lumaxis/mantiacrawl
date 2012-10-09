@@ -46,28 +46,25 @@ class Down:
         dll = dom.find("a",class_=self.ptype)
         return dll.get("href")
 
-    def load(self, url, i):
+    def load(self, url, i): 
         while True:
             webFile = urllib2.urlopen(url)
-            if not os.path.exists(self.localpath):
-                os.makedirs(self.localpath)
+            localFile = open(self.localpath + "/" + url.split('/')[-1], 'wb')
+            print str(localFile)
             meta = webFile.info()
             webFile_size = int(meta.getheaders("Content-Length")[0])
-            localFile = open(self.localpath + url.split('/')[-1], 'wb')
-
-            if os.path.exists(self.localpath + url.split('/')[-1]):
-                localFile_size = str(os.path.getsize(localFile))
+            if True: #os.path.exists(localFile)
+                localFile_size = os.path.getSize(localFile)
                 print webFile_size
                 print localFile_size
                 if webFile_size == localFile_size:
                     break
-
             print("[" + str(i) + "/" + str(len(c.links)) + "] Downloading: {0} Size: {1} Bytes".format(url, webFile_size))
-            #Start actual download
+
             file_size_dl = 0
-            block_size = 4096
+            block_sz = 4096
             while True:
-                buffer = webFile.read(block_size)
+                buffer = webFile.read(block_sz)
                 if not buffer:
                     break
 
@@ -77,18 +74,17 @@ class Down:
             localFile.close()
 
 def usage():
-    print """Usage:
-    python mantiacrawl.py <localpath> <type>
-    mantiacrawl expects two arguments:
-
-    <localpath>      your local path where you want to save the downloaded files  
-    <type>           choose which version to download: iphone, wallpaper or fullscreen
-
-
-    Example: 
-
-    python mantiacrawl.py download/iphone/ iphone
-    exit()"""
+    print "Usage:"
+    print ""
+    print "python mantiacrawl.py <localpath> <type>"
+    print ""
+    print "Es werden ZWEI Argumente erwartet:"
+    print "<LOCALPATH> lokaler Pfad in dem die Bilder gespeichert werden sollen."
+    print "<TYPE> 3 Möglichkeiten: iphone, wallpaper, fullscreen; bestimmt die Art des Wallpapers"
+    print ""
+    print "Example: python mantiacrawl.py mantia/iphone/ iphone"
+    print ""
+    exit()
 
 if len(sys.argv)==3: #check for right number of arguments
     if sys.argv[1] is not None and sys.argv[2] is not None:
