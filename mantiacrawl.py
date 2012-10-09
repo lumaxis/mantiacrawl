@@ -39,14 +39,15 @@ class Down:
         self.localpath = localpath
         self.ptype = ptype
 
-    def getDownloadLink(self,link):
+    def getFileLink(self,link):
         site = urllib2.urlopen(link)
         html =  site.read()
         dom = BeautifulSoup(html)
         dll = dom.find("a",class_=self.ptype)
         return dll.get("href")
 
-    def load(self, url, i): 
+    def load(self, url, i):
+        print "[" + str(i) + "/" + str(len(c.links)) + "] " + url.split('/')[-1]      
         while True:
             webFile = urllib2.urlopen(url)
             meta = webFile.info()
@@ -56,12 +57,12 @@ class Down:
                 localFile_size = os.path.getsize(self.localpath + "/" + url.split('/')[-1])
                 # If a file with that name exists check if it is the exact same file
                 if webFile_size == localFile_size:
-                    print "[" + str(i) + "/" + str(len(c.links)) + "] Skipping, already exists."
+                    print "Skipping, already exists."
                     break
             # If the file either doesn't already exist or has been updated/corrupted start download
             else:
                 localFile = open(self.localpath + "/" + url.split('/')[-1], 'w')
-                print("[" + str(i) + "/" + str(len(c.links)) + "] Downloading: {0} Size: {1} Bytes".format(url, webFile_size))
+                print "Downloading: {0} Size: {1} Bytes".format(url, webFile_size)
                 file_size_dl = 0
                 block_size = 4096
                 while True:
@@ -72,7 +73,7 @@ class Down:
                     localFile.write(buffer)
 
                 localFile.close()
-                break
+            break
 
 def usage():
     """
@@ -87,7 +88,7 @@ def usage():
 
     Example: 
         
-        python mantiacrawl.py download/iphone/ iphone
+        python mantiacrawl.py download/iphone iphone
     
     """
     exit()
@@ -98,13 +99,13 @@ if len(sys.argv)==3: #check for right number of arguments
         ptype = sys.argv[2]
         print "Downloading everything on " + site_url + ptype + " to " + localpath
         c = Crawl(site_url)
-        print "Fetched all links."
+        print "Fetched all links.\n"
 
         d = Down(c.links,localpath,ptype)
         print "Starting download."
         i = 1
         for link in c.links:
-            d.load(d.getDownloadLink(link), i)
+            d.load(d.getFileLink(link), i)
             i += 1
             
 else:
