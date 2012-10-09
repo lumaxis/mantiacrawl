@@ -49,41 +49,47 @@ class Down:
     def load(self, url, i): 
         while True:
             webFile = urllib2.urlopen(url)
-            localFile = open(self.localpath + "/" + url.split('/')[-1], 'wb')
-            print str(localFile)
             meta = webFile.info()
             webFile_size = int(meta.getheaders("Content-Length")[0])
-            if True: #os.path.exists(localFile)
-                localFile_size = os.path.getSize(localFile)
-                print webFile_size
-                print localFile_size
+            # Check if a file with that name already exists
+            if os.path.exists(self.localpath + "/" + url.split('/')[-1]):
+                localFile_size = os.path.getsize(self.localpath + "/" + url.split('/')[-1])
+                # If a file with that name exists check if it is the exact same file
                 if webFile_size == localFile_size:
+                    print "[" + str(i) + "/" + str(len(c.links)) + "] Already exists."
                     break
-            print("[" + str(i) + "/" + str(len(c.links)) + "] Downloading: {0} Size: {1} Bytes".format(url, webFile_size))
+            # If the file either doesn't already exist or has been updated/corrupted start download
+            else:
+                localFile = open(self.localpath + "/" + url.split('/')[-1], 'w')
+                print("[" + str(i) + "/" + str(len(c.links)) + "] Downloading: {0} Size: {1} Bytes".format(url, webFile_size))
+                file_size_dl = 0
+                block_size = 4096
+                while True:
+                    buffer = webFile.read(block_size)
+                    if not buffer:
+                        break
+                    file_size_dl += len(buffer)
+                    localFile.write(buffer)
 
-            file_size_dl = 0
-            block_sz = 4096
-            while True:
-                buffer = webFile.read(block_sz)
-                if not buffer:
-                    break
-
-                file_size_dl += len(buffer)
-                localFile.write(buffer)
-
-            localFile.close()
+                localFile.close()
+                break
 
 def usage():
-    print "Usage:"
-    print ""
-    print "python mantiacrawl.py <localpath> <type>"
-    print ""
-    print "Es werden ZWEI Argumente erwartet:"
-    print "<LOCALPATH> lokaler Pfad in dem die Bilder gespeichert werden sollen."
-    print "<TYPE> 3 Möglichkeiten: iphone, wallpaper, fullscreen; bestimmt die Art des Wallpapers"
-    print ""
-    print "Example: python mantiacrawl.py mantia/iphone/ iphone"
-    print ""
+    """
+    Usage:
+        
+        python mantiacrawl.py <localpath> <type>
+    
+    mantiacrawl expects two arguments:
+
+        <localpath>      your local path where you want to save the downloaded files  
+        <type>           choose which version of the wallpapers you want to download: iphone, wallpaper or fullscreen
+
+    Example: 
+        
+        python mantiacrawl.py download/iphone/ iphone
+    
+    """
     exit()
 
 if len(sys.argv)==3: #check for right number of arguments
