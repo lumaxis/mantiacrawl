@@ -46,20 +46,6 @@ class Down:
         dll = dom.find("a",class_=self.ptype)
         return dll.get("href")
 
-<<<<<<< HEAD
-    def load(self, url, i):
-        webFile = urllib2.urlopen(url)
-        localFile = open(self.localpath + "/" + url.split('/')[-1], 'w')
-        meta = webFile.info()
-        file_size = int(meta.getheaders("Content-Length")[0])
-        print("[" + str(i) + "/" + str(len(c.links)) + "] Downloading: {0} Size: {1} Bytes".format(url, file_size))
-
-        file_size_dl = 0
-        block_sz = 4096
-        while True:
-            buffer = webFile.read(block_sz)
-            if not buffer:
-=======
     def load(self, url, i): 
         while True:
             webFile = urllib2.urlopen(url)
@@ -70,7 +56,7 @@ class Down:
                 localFile_size = os.path.getsize(self.localpath + "/" + url.split('/')[-1])
                 # If a file with that name exists check if it is the exact same file
                 if webFile_size == localFile_size:
-                    print "[" + str(i) + "/" + str(len(c.links)) + "] Already exists."
+                    print "[" + str(i) + "/" + str(len(c.links)) + "] Skipping, already exists."
                     break
             # If the file either doesn't already exist or has been updated/corrupted start download
             else:
@@ -86,7 +72,6 @@ class Down:
                     localFile.write(buffer)
 
                 localFile.close()
->>>>>>> skip_existing
                 break
 
 def usage():
