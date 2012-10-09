@@ -14,7 +14,7 @@ Example:
     python mantiacrawl.py download/iphone/ iphone
 
 ## Contributors:
-[BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/) and their beautifully easy HTML scraping library
+[BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/) and their beautifully easy HTML scraping library.  
 You need to install it either via
 
     pip install beautifulsoup4
