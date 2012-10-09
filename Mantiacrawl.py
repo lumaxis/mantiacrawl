@@ -71,6 +71,10 @@ class Down:
 
             file_size_dl += len(buffer)
             localFile.write(buffer)
+            p = float(file_size_dl) / file_size
+            status = r"{0}  [{1:.2%}]".format(file_size_dl, p)
+            status = status + chr(8)*(len(status)+1)
+            sys.stdout.write(status)
 
         localFile.close()
 
