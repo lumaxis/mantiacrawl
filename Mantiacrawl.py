@@ -60,7 +60,7 @@ class Down:
         localFile = open(self.localpath + "/" + url.split('/')[-1], 'w')
         meta = webFile.info()
         file_size = int(meta.getheaders("Content-Length")[0])
-        print("[" + str(i) + "/" + str(len(c.links)) + "] Downloading: {0} Bytes: {1}".format(url, file_size))
+        print("[" + str(i) + "/" + str(len(c.links)) + "] Downloading: {0} Size: {1} Bytes".format(url, file_size))
 
         file_size_dl = 0
         block_sz = 4096
