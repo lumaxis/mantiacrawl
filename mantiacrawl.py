@@ -84,7 +84,7 @@ def usage():
     mantiacrawl expects two arguments:
 
         <localpath>      your local path where you want to save the downloaded files  
-        <type>           choose which version of the wallpapers you want to download: iphone, wallpaper or fullscreen
+        <type>           choose which version of the wallpapers you want to download: iphone, fullscreen or widescreen
 
     Example: 
         
