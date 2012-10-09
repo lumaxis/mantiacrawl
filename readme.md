@@ -3,16 +3,21 @@ Created by Lukas Spieß (blubser) & Oliver Fesseler (ofesseler)
 
 ## Usage:
 python mantiacrawl.py <localpath> <type>
-Es werden ZWEI Argumente erwartet:
+mantiacrawl expects two arguments:
 
-    <localpath>      lokaler Pfad in dem die Bilder gespeichert werden sollen.  
-    <type>           3 Möglichkeiten: iphone, wallpaper, fullscreen; bestimmt die Art des Wallpapers
+    <localpath>      your local path where you want to save the downloaded files  
+    <type>           choose which version of the wallpapers you want to download: iphone, wallpaper or fullscreen
 
 
 Example: 
 
-    python mantiacrawl.py mantia/iphone/ iphone
-
+    python mantiacrawl.py download/iphone/ iphone
 
 ## Contributors:
 [BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/) and their beautifully easy HTML scraping library
+You need to install it either via
+
+    pip install beautifulsoup4
+or via
+
+    easy_install beautifulsoup4
