@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-#! /usr/bin/python2.7
-# -*- coding: utf-8 -*-
-
-import urllib2
-
-site = urllib2.urlopen("http://mantia.me/wallpaper/")
-print site.read()
-
-=======
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 import os
@@ -43,7 +33,7 @@ class Crawl:
 class Down:
     links=[]
     localpath ="iphone/"
-    ptype = "iphone"
+    ptype = ""
     def __init__(self,links, localpath, ptype):
         self.links = links
         self.localpath = localpath
@@ -70,15 +60,15 @@ def usage():
     print ""
     print "python mantiacrawl.py <localpath> <type>"
     print ""
-    print "Es werden ZWEI argumente erwartet:"
-    print "<LOCALPATH> lokaler pfad wo die Bilder gespeichert werden sollen."
-    print "<TYPE> 3 möglichkeiten: iphone, wallpaper, fullscreen bestimmt die art des wallpapers"
+    print "Es werden ZWEI Argumente erwartet:"
+    print "<LOCALPATH> lokaler Pfad in dem die Bilder gespeichert werden sollen."
+    print "<TYPE> 3 Möglichkeiten: iphone, wallpaper, fullscreen; bestimmt die Art des Wallpapers"
     print ""
     print "Example: python mantiacrawl.py mantia/iphone/ iphone"
     print ""
     exit()
 
-if len(sys.argv)==3:
+if len(sys.argv)==3: #check for right number of arguments
     if sys.argv[1] is not None and sys.argv[2] is not None:
         localpath = sys.argv[1]
         ptype = sys.argv[2]
@@ -98,4 +88,3 @@ if len(sys.argv)==3:
                 d.load(d.getDownloadLink(link))
 else:
     usage()
->>>>>>> ofesseler/master
