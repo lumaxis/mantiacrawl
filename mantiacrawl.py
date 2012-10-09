@@ -105,7 +105,10 @@ if len(sys.argv)==3: #check for right number of arguments
         print "Starting download."
         i = 1
         for link in c.links:
-            d.load(d.getFileLink(link), i)
+            try:
+                d.load(d.getFileLink(link), i)
+            except AttributeError:
+                print "Could not save file from " + link
             i += 1
             
 else:
