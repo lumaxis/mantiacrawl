@@ -108,7 +108,7 @@ if len(sys.argv)==3: #check for right number of arguments
             try:
                 d.load(d.getFileLink(link), i)
             except AttributeError:
-                print "Could not save file from " + link
+                print "The wallpaper " + link + " is not available in your desired format, sorry."
             i += 1
             
 else:
