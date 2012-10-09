@@ -47,15 +47,6 @@ class Down:
         return dll.get("href")
 
     def load(self, url, i):
-        #downloads the iPhone Wallpaper from mantia.me/wallpaper/XXX
-        # webFile = urllib2.urlopen(url)
-        # if not os.path.exists(self.localpath):
-        #     os.makedirs(self.localpath)
-        # localFile = open(self.localpath + "/"+ url.split('/')[-1], 'w')
-        # localFile.write(webFile.read())
-        # webFile.close()
-        # localFile.close()
-
         webFile = urllib2.urlopen(url)
         localFile = open(self.localpath + "/" + url.split('/')[-1], 'w')
         meta = webFile.info()
